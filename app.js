@@ -1,8 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
-const env = dotenv.config().parsed;
+dotenv.config().parsed;
 
-const PORT = env?.PORT || 4000;
+const PORT = process.env.PORT || 4000;
+
+import { reply } from "./src/replyMessage";
 
 const app = express();
 
@@ -18,8 +20,9 @@ app.get("/", (req, res) => {
 });
 
 app.post("/webhook", (req, res) => {
-  console.log("req.body =>", JSON.stringify(req.body, null, 2)); //สิ่งที่ Line ส่งมา
-  res.send("HTTP POST request sent to the webhook URL!");
+  const reply_token = req.body.events[0].replyToken;
+  reply(reply_token);
+  res.sendStatus(200);
 });
 
 app.listen(PORT, () => {
