@@ -17,9 +17,10 @@ export default function reply(reply_token) {
 
   try {
     axios.post("https://api.line.me/v2/bot/message/reply", body, {
-      headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.SECRET_KEY}` },
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.ACCESSTOKEN}` },
     });
   } catch (err) {
-    console.log("reply message error :", err);
+    const errMsg = err?.response?.data || err?.response || err;
+    console.log("reply message error :", errMsg);
   }
 }
