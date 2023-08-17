@@ -1,10 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
+import replyMessage from "./src/replyMessage/reply.js";
+
 dotenv.config().parsed;
 
 const PORT = process.env.PORT || 4000;
-
-import { reply } from "./src/replyMessage";
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 
 app.post("/webhook", (req, res) => {
   const reply_token = req.body.events[0].replyToken;
-  reply(reply_token);
+  replyMessage(reply_token);
   res.sendStatus(200);
 });
 
