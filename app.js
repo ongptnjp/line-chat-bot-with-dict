@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import replyMessage from "./src/replyMessage/reply.js";
+import dictionary from "./src/dictionary/dictionary.js";
 
 dotenv.config().parsed;
 
@@ -19,10 +20,18 @@ app.get("/", (req, res) => {
   res.send("สวัสดี express");
 });
 
+app.get("/dictionary/:words", async (req, res) => {
+  const theWord = req.params?.words ?? null;
+  const response = await dictionary(theWord);
+
+  res.send(response);
+});
+
 app.post("/webhook", (req, res) => {
   console.log("req.body : ", req.body);
   const reply_token = req.body?.events[0]?.replyToken;
-  replyMessage(reply_token);
+  const message = req.body?.evnets[0]?.message?.text;
+  replyMessage(reply_token, message);
   res.sendStatus(200);
 });
 
