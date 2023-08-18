@@ -29,8 +29,9 @@ app.get("/dictionary/:words", async (req, res) => {
 
 app.post("/webhook", (req, res) => {
   console.log("req.body : ", req.body);
-  const reply_token = req.body?.events[0]?.replyToken;
-  const message = req.body?.evnets[0]?.message?.text;
+  const bodyEvent = req.body?.event[0];
+  const reply_token = bodyEvent?.replyToken;
+  const message = bodyEvent?.message?.text;
   replyMessage(reply_token, message);
   res.sendStatus(200);
 });
