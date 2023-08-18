@@ -9,8 +9,8 @@ import { capitalizeFirstLetter } from "../utils/utils.js";
  * @param {string} message
  * @returns {void}
  */
-export default function reply(reply_token, message) {
-  const replyMessage = dictionary(message);
+export default async function reply(reply_token, message) {
+  const replyMessage = await dictionary(message);
 
   console.log("replyMessage: ", replyMessage);
 
