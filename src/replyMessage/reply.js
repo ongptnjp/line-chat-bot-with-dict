@@ -11,6 +11,8 @@ import { capitalizeFirstLetter } from "../utils/utils.js";
  */
 export default async function reply(reply_token, message) {
   try {
+    if (!message || message.length === 0) return null;
+
     const replyMessage = await dictionary(message);
 
     console.log("replyMessage: ", replyMessage);
@@ -38,8 +40,10 @@ export default async function reply(reply_token, message) {
 
     const body = {
       replyToken: reply_token,
-      message: rawMessage,
+      messages: rawMessage,
     };
+
+    console.log("body : ", body);
 
     axios.post("https://api.line.me/v2/bot/message/reply", body, {
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.ACCESSTOKEN}` },
@@ -49,3 +53,5 @@ export default async function reply(reply_token, message) {
     console.log("reply message error :", errMsg);
   }
 }
+
+// const message = [{"type":"text","text":"Noun: Hello!" or an equivalent greeting."},{"type":"text","text":"Verb: To greet with \\"hello\\"."},{"type":"text","text":"Interjection: A greeting (salutation) said when meeting someone or acknowledging someone’s arrival or presence."}]

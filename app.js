@@ -29,10 +29,10 @@ app.get("/dictionary/:words", async (req, res) => {
 
 app.post("/webhook", async (req, res) => {
   console.log("req.body : ", req.body);
-  const bodyEvent = req.body?.events[0];
-  const reply_token = bodyEvent?.replyToken;
-  const message = bodyEvent?.message?.text;
-  replyMessage(reply_token, message);
+  const events = req.body?.events && req.body?.events[0];
+  const replyToken = events?.replyToken;
+  const message = events?.message?.text;
+  replyMessage(replyToken, message);
   res.sendStatus(200);
 });
 
